@@ -8,7 +8,7 @@ var port = (process.env.PORT || 10000);
 
 var app = express();
 
-var dbFileName  = path.join(__dirname,'contacts.json');
+var dbFileName  = path.join(__dirname,'products.json');
 var db = new DataStore({
 		filename : dbFileName,
 		autoload: true
@@ -16,27 +16,27 @@ var db = new DataStore({
 
 console.log('DB initialized');
 
-db.find({},function (err,contacts){
+db.find({},function (err,products){
 
-	if(contacts.length == 0){
+	if(products.length == 0){
 		console.log('Empty DB, loading initial data');
 
-		person1 = {
-			name : 'Pablo',
-			email : 'pafmon@gmail.com',
-			number: '682 123 123'
+		product1 = {
+			name : 'Producto ejemplo 1',
+			description : 'este producto sirve para ...',
+			code: '8576655'
 		};
 
-		person2 = {
-			name : 'Pedro',
-			email : 'pedro@gmail.com',
-			number: '682 122 126'
+		product2 = {
+			name : 'Producto ejemplo 2',
+			description : 'este producto sirve para ...',
+			code: '8576655'
 		};
 
-		db.insert([person1, person2]);
+		db.insert([product1, product2]);
 
 	}else{
-		console.log('DB has '+contacts.length+' contacts ');
+		console.log('DB has '+products.length+' products ');
 	}
 
 });
@@ -44,41 +44,41 @@ db.find({},function (err,contacts){
 app.use(express.static(__dirname+"/public"));
 app.use(bodyParser.json());
 
-app.get('/contacts',function(req,res){
+app.get('/products',function(req,res){
 	console.log('New GET request');
 
-	db.find({},function (err,contacts){
-		res.json(contacts);
+	db.find({},function (err,products){
+		res.json(products);
 	});
 });
 
-app.post('/contacts',function(req,res){
+app.post('/products',function(req,res){
 	console.log('New POST request');
 	console.log(req.body);
 	db.insert(req.body);
 	res.sendStatus(200);
 });
 
-app.get('/contacts/:name',function(req,res){
+app.get('/products/:name',function(req,res){
 	var n = req.params.name;
-	console.log('New GET request for contact with name '+n);
+	//console.log('New GET request for product with name '+n);
 
-	db.find({ name : n},function (err,contacts){
-		console.log("Contacts obtained: "+contacts.length);
-		if(contacts.length  > 0){
-			res.send(contacts[0]);
+	db.find({ name : n},function (err,products){
+		console.log("products obtained: "+products.length);
+		if(products.length  > 0){
+			res.send(products[0]);
 		}else{
 			res.sendStatus(404);
 		}
 	});
 });
 
-app.delete('/contacts/:name',function(req,res){
+app.delete('/products/:name',function(req,res){
 	var n = req.params.name;
-	console.log('New DELETE request for contact with name '+n);
+	console.log('New DELETE request for product with name '+n);
 
 	db.remove({ name: n},{}, function(err,numRemoved){
-		console.log("Contacts removed: "+numRemoved);
+		console.log("products removed: "+numRemoved);
 		if(numRemoved  == 1)
 			res.sendStatus(200);
 		else

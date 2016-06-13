@@ -1,7 +1,7 @@
 {
-  "name": "contactlist",
+  "name": "productlist",
   "version": "0.0.1",
-  "description": "A simple contactlist",
+  "description": "A simple productlist",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pafmon/contactlist"
+    "url": "https://github.com/hassane14/aws-201621"
   },
   "keywords": [
     "node",

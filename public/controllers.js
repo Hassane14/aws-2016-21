@@ -1,26 +1,26 @@
-var myApp = angular.module("ContactListApp",[]);
+var myApp = angular.module("ShoppingListApp",[]);
 
 myApp.controller('AppCtrl',['$scope','$http',function($scope,$http){
 	console.log("Controller initialized");
 
 	var refresh = function (){
-		$http.get('/contacts').success(function (contacts){
+		$http.get('/products').success(function (products){
 			console.log('Data received successfully');
-			$scope.contactlist = contacts;
+			$scope.productlist = products;
 		});
 	}
 
 	refresh();
 
-	$scope.addContact = function(){
-		console.log("Inserting contact ...");
-		$http.post('/contacts',$scope.contact);
+	$scope.addProduct = function(){
+		console.log("Inserting product ...");
+		$http.post('/products',$scope.product);
 		refresh();
 	}
 
-	$scope.deleteContact = function(name){
-		console.log("Deleting contact with "+name);
-		$http.delete('/contacts/'+name);
+	$scope.deleteProduct = function(name){
+		console.log("Deleting product with "+name);
+		$http.delete('/products/'+name);
 		refresh();
 	}
 
